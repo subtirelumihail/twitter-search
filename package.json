@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel src --watch --out-file lib/compiled.js"
+    "start": "watchify src/search.js -o lib/compiled.js -t [ babelify --presets [ es2015 ] ]"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/subtirelumihail/twitter-search",
   "devDependencies": {
-    "babel-cli": "^6.1.18"
+    "babel-cli": "^6.1.18",
+    "babelify": "^7.2.0"
   }
 }

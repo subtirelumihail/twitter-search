@@ -18,30 +18,33 @@ class Request {
       const encodedConsumerKey = encodeURIComponent(this.consumerKey);
       const encodedConsumerSecret = encodeURIComponent(this.consumerSecret);
       const encodedKeys = btoa(`${encodedConsumerKey}:${encodedConsumerSecret}`);
-      
+
       let xhttp = new XMLHttpRequest();
       
-      xhttp.open('POST', 'https://api.twitter.com/oauth2/token');
+      xhttp.open('POST', 'https://api.twitter.com/oauth2/token', true);
       xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
       xhttp.setRequestHeader('Authorization', `Basic ${encodedKeys}`);
+      xhttp.withCredentials = true;
       xhttp.send('grant_type=client_credentials');
       
       xhttp.onload = () => {
         if (xhttp.status === 200) {
-          resolve(xhttp.response.access_token);
+          let res = JSON.parse(xhttp.response);
+          this.saveTokenInStorage(res.access_token);
+          resolve(res.access_token);
         } else {
-          reject('Error >> ', xhttp.statusText);
+          reject('Error >> ', xhttp);
         }
       };
         
       xhttp.onerror = function () {
-        reject('Error >> ', xhttp.statusText);
+        reject('Error >> ', xhttp);
       };
     });
     
     return promise;
   }
-  
+
   getToken() {
     var promise = new Promise((resolve, reject) => {
       let token = this.checkTokenInStorage();
@@ -61,21 +64,21 @@ class Request {
       this.getToken().then( token => {
         let xhttp = new XMLHttpRequest();
         
-        xhttp.open('POST', 'https://api.twitter.com/oauth2/token');
+        xhttp.open('GET', `https://api.twitter.com/1.1/search/tweets.json?q=${encodeURIComponent(str)}`, true);
         xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
         xhttp.setRequestHeader('Authorization', `Bearer ${token}`);
         xhttp.send('grant_type=client_credentials');
-        
         xhttp.onload = () => {
           if (xhttp.status === 200) {
-            resolve(xhttp.response.access_token);
+            let res = JSON.parse(xhttp.response);
+            resolve(res.statuses);
           } else {
-            reject('Error >> ', xhttp.statusText);
+            reject('Error >> ', xhttp);
           }
         };
           
         xhttp.onerror = function () {
-          reject('Error >> ', xhttp.statusText);
+          reject('Error >> ', xhttp);
         };
       });
       
