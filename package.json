@@ -1,0 +1,22 @@
+{
+  "name": "twitter-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel src --watch --out-file lib/compiled.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subtirelumihail/twitter-search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/subtirelumihail/twitter-search/issues"
+  },
+  "homepage": "https://github.com/subtirelumihail/twitter-search",
+  "devDependencies": {
+    "babel-cli": "^6.1.18"
+  }
+}
