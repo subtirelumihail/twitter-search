@@ -4,3 +4,7 @@ For this to work locally without using a server you need to launch the Chrome Br
 `open -a Google\ Chrome --args --disable-web-security`
 
 This disables the CORS Options preflight for thre xhttp requests
+
+### TO DO
+- add load more results
+- add loading state

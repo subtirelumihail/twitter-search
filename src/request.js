@@ -13,7 +13,6 @@ class Request {
   }
   
   requestToken() {
-    //TODO: this should be a promise
     var promise = new Promise((resolve, reject) => {
       const encodedConsumerKey = encodeURIComponent(this.consumerKey);
       const encodedConsumerSecret = encodeURIComponent(this.consumerSecret);
@@ -57,6 +56,10 @@ class Request {
     });
     
     return promise;
+  }
+  
+  loadMore() {
+    
   }
   
   search(str) {
